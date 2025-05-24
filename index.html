@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国語単語学習アプリ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>中国語単語学習</h1>
+
+        <section id="data-import-section">
+            <h2>単語データ登録</h2>
+            <p>以下の形式でデータを貼り付けてください（カンマ区切りCSV）:<br>
+                区分,中国語,ピンイン,日本語訳<br>
+                例: 1,你,nǐ,あなた
+            </p>
+            <textarea id="csv-input" rows="5" placeholder="ここにCSVデータを貼り付け"></textarea>
+            <button id="import-csv-button">登録する</button>
+            <button id="clear-all-data-button">全データ削除</button>
+        </section>
+
+        <section id="flashcard-section">
+            <h2>フラッシュカード</h2>
+            <div id="flashcard-container">
+                <div id="flashcard">
+                    <div id="card-surface">
+                        <!-- カードの表・裏の内容がここに表示される -->
+                    </div>
+                </div>
+                <div id="flashcard-navigation">
+                    <button id="back-button">Back</button>
+                    <button id="next-button">Next</button>
+                </div>
+                <div id="current-card-info">
+                    <span id="card-count">0 / 0</span>
+                </div>
+                <div id="current-card-actions">
+                    <button id="edit-word-button" disabled>変更</button>
+                    <button id="delete-word-button" disabled>削除</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="word-list-section">
+            <h2>単語一覧</h2>
+            <button id="show-word-list-button">単語一覧を表示/更新</button>
+            <div id="word-list-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>区分</th>
+                            <th>中国語</th>
+                            <th>ピンイン</th>
+                            <th>日本語訳</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="word-list-tbody">
+                        <!-- 単語一覧がここに表示される -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- 単語編集モーダル (最初は非表示) -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h3>単語編集</h3>
+            <input type="hidden" id="edit-word-index">
+            <div>
+                <label for="edit-category">区分:</label>
+                <input type="text" id="edit-category" placeholder="1 または 2">
+            </div>
+            <div>
+                <label for="edit-chinese">中国語:</label>
+                <input type="text" id="edit-chinese">
+            </div>
+            <div>
+                <label for="edit-pinyin">ピンイン:</label>
+                <input type="text" id="edit-pinyin">
+            </div>
+            <div>
+                <label for="edit-japanese">日本語訳:</label>
+                <input type="text" id="edit-japanese">
+            </div>
+            <button id="save-edit-button">保存</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
