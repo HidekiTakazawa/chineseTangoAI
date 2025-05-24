@@ -2,32 +2,82 @@ body {
     font-family: sans-serif;
     line-height: 1.6;
     margin: 0;
-    padding: 20px;
+    padding: 0; /* bodyのpaddingを0に */
     background-color: #f4f4f4;
     color: #333;
 }
 
 .container {
     max-width: 800px;
-    margin: auto;
+    margin: 0 auto; /* 上下のマージンを0に */
     background: #fff;
-    padding: 20px;
-    border-radius: 8px;
+    /* padding: 20px; */ /* containerのpaddingはheaderとmainで管理 */
+    border-radius: 0 0 8px 8px; /* 上部は角丸なし */
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    min-height: 100vh; /* 画面の高さいっぱいに */
+    display: flex;
+    flex-direction: column;
 }
 
-h1, h2 {
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    border-radius: 8px 8px 0 0; /* 上部のみ角丸 */
+}
+
+header h1 {
+    margin: 0 0 10px 0;
+    font-size: 24px;
+    color: white;
+}
+
+nav button {
+    background-color: #0056b3;
+    color: white;
+    border: 1px solid #004085;
+    padding: 8px 12px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+nav button:hover {
+    background-color: #004085;
+}
+nav button.active-nav { /* アクティブなナビゲーションボタンのスタイル */
+    background-color: #fff;
+    color: #0056b3;
+    font-weight: bold;
+}
+
+
+main {
+    padding: 20px;
+    flex-grow: 1; /* mainコンテンツが残りのスペースを埋めるように */
+}
+
+
+h2 { /* section内のh2 */
     color: #333;
     text-align: center;
+    margin-top: 0; /* sectionの先頭なので上マージン調整 */
     margin-bottom: 20px;
 }
 
-section {
+.app-section {
     margin-bottom: 30px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    background-color: #fff; /* 各セクションの背景を白に */
 }
+
+.hidden {
+    display: none !important; /* !importantで確実に非表示 */
+}
+
 
 textarea {
     width: 100%;
@@ -133,8 +183,16 @@ button:disabled {
     text-decoration: underline;
 }
 
+#back-to-flashcard-from-list {
+    margin-top: 15px;
+    background-color: #6c757d;
+}
+#back-to-flashcard-from-list:hover {
+    background-color: #5a6268;
+}
 
-/* モーダル */
+
+/* モーダル (変更なし) */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
