@@ -323,13 +323,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 単語一覧機能 ---
+   // ... (前回のJavaScriptの大部分は変更なし) ...
+
+// --- 単語一覧機能 ---
     function updateWordListDisplay() {
         wordListTbody.innerHTML = '';
         if (words.length === 0) {
             const row = wordListTbody.insertRow();
             const cell = row.insertCell();
-            cell.colSpan = 5; // 列数に合わせて調整
+            cell.colSpan = 5;
             cell.textContent = '登録されている単語がありません。';
             cell.style.textAlign = 'center';
             return;
@@ -338,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
         words.forEach((word, index) => {
             const row = wordListTbody.insertRow();
             row.insertCell().textContent = word.category;
-            
+
             const chineseCell = row.insertCell();
             const chineseSpan = document.createElement('span');
             chineseSpan.textContent = word.chinese;
@@ -351,49 +353,55 @@ document.addEventListener('DOMContentLoaded', () => {
             row.insertCell().textContent = word.japanese;
 
             const actionCell = row.insertCell();
-            
-            // 編集ボタン (アイコン)
+
             const editBtnList = document.createElement('button');
-            editBtnList.innerHTML = '✎'; // 鉛筆アイコン
+            editBtnList.innerHTML = '✎';
             editBtnList.title = '編集';
             editBtnList.classList.add('icon-button');
             editBtnList.addEventListener('click', () => {
-                currentWordIndex = index; 
-                isCardShowingFront = true; 
-                editWordButton.click(); // フラッシュカードセクションの編集ボタンのイベントを発火
+                currentWordIndex = index;
+                isCardShowingFront = true;
+                editWordButton.click();
             });
             actionCell.appendChild(editBtnList);
 
-            // 削除ボタン (アイコン)
             const deleteBtnList = document.createElement('button');
-            deleteBtnList.innerHTML = '✖'; // バツアイコン
+            deleteBtnList.innerHTML = '✖';
             deleteBtnList.title = '削除';
             deleteBtnList.classList.add('icon-button', 'delete');
             deleteBtnList.addEventListener('click', () => {
                 if (confirm(`「${words[index].chinese}」を削除しますか？`)) {
+                    const originalCurrentWordIndex = currentWordIndex; // 削除前のインデックスを保持
                     words.splice(index, 1);
                     saveWords();
-                    // currentWordIndexの調整は、フラッシュカード表示に影響する場合のみ考慮
-                    // ここでは一覧の再描画と、必要ならフラッシュカードのインデックスも調整
-                    if (currentWordIndex === index) { // 削除したのがフラッシュカードで表示中のものだった場合
-                        if (currentWordIndex >= words.length && words.length > 0) {
-                            currentWordIndex = words.length - 1;
+
+                    // フラッシュカードのcurrentWordIndexを調整
+                    if (words.length === 0) {
+                        currentWordIndex = 0;
+                    } else if (originalCurrentWordIndex === index) { // 削除したのが表示中のカード
+                        if (originalCurrentWordIndex >= words.length) { // 末尾を削除した場合
+                            currentWordIndex = words.length > 0 ? words.length - 1 : 0;
+                        } else {
+                            // インデックスは変わらないか、次の要素が来る (loadWordsで処理)
+                            currentWordIndex = originalCurrentWordIndex; // 維持してloadWordsに任せる
                         }
-                        // isCardShowingFront = true; // loadWordsでリセットされる
-                    } else if (currentWordIndex > index) { // 削除したのが表示中より前の場合
+                    } else if (originalCurrentWordIndex > index) { // 表示中より前のカードを削除
                         currentWordIndex--;
                     }
-                    loadWords(); // フラッシュカードの状態も更新
-                    updateWordListDisplay(); // 一覧を再表示
+                    // currentWordIndexが負にならないように
+                    if (currentWordIndex < 0 && words.length > 0) currentWordIndex = 0;
+
+
+                    loadWords(); // フラッシュカードの状態を更新 (内部でupdateFlashcardDisplayが呼ばれる)
+                    updateWordListDisplay(); // ★変更点: 一覧を明示的に再表示
                 }
             });
             actionCell.appendChild(deleteBtnList);
         });
     }
 
-    // --- 編集モーダル関連 ---
-    // closeModalButton, window click listener for modal (変更なし)
-    // ... (前回のモーダル関連リスナーをそのまま使用) ...
+
+// --- 編集モーダル関連 ---
     closeModalButton.addEventListener('click', () => {
         editModal.style.display = 'none';
     });
@@ -428,10 +436,13 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         saveWords();
         editModal.style.display = 'none';
-        isCardShowingFront = true;
-        loadWords();
+        isCardShowingFront = true; // 編集後は表から表示
+        loadWords(); // フラッシュカードの状態を更新 (内部でupdateFlashcardDisplayが呼ばれる)
+        updateWordListDisplay(); // ★変更点: 一覧を明示的に再表示
         alert('単語を更新しました。');
     });
+
+// ... (以降のJavaScriptも変更なし) ... 
 
     // --- 初期化 ---
     loadWords();
