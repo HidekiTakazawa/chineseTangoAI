@@ -411,11 +411,25 @@ document.addEventListener('DOMContentLoaded', () => {
             editModal.style.display = 'none';
         }
     });
+    // editWordButtonのイベントリスナー内で、textareaに値を設定
+    editWordButton.addEventListener('click', () => {
+        if (words.length === 0) return;
+        const word = words[currentWordIndex];
+        editWordIndexInput.value = currentWordIndex;
+        editCategoryInput.value = word.category;
+        // textareaに値を設定
+        editChineseInput.value = word.chinese;
+        editPinyinInput.value = word.pinyin;
+        editJapaneseInput.value = word.japanese;
+        editModal.style.display = 'block';
+    });
 
+    // saveEditButtonのイベントリスナー内で、textareaから値を取得
     saveEditButton.addEventListener('click', () => {
         const index = parseInt(editWordIndexInput.value);
         const newCategory = editCategoryInput.value.trim();
-        const newChinese = editChineseInput.value.trim();
+        // textareaから値を取得
+        const newChinese = editChineseInput.value.trim(); // trim()は改行を維持しつつ前後の空白を除去
         const newPinyin = editPinyinInput.value.trim();
         const newJapanese = editJapaneseInput.value.trim();
 
@@ -436,10 +450,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         saveWords();
         editModal.style.display = 'none';
-        isCardShowingFront = true; // 編集後は表から表示
-        loadWords(); // フラッシュカードの状態を更新 (内部でupdateFlashcardDisplayが呼ばれる)
-        updateWordListDisplay(); // ★変更点: 一覧を明示的に再表示
-        alert('単語を更新しました。');
+        isCardShowingFront = true;
+        loadWords();
+        updateWordListDisplay();
+        alert('データを更新しました。');
     });
 
 // ... (以降のJavaScriptも変更なし) ... 

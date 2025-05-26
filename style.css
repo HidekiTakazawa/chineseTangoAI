@@ -140,6 +140,8 @@ button:disabled {
     box-sizing: border-box;
     font-size: 24px;
     overflow-wrap: break-word; /* 長い単語がはみ出ないように */
+    align-items: flex-start; /* 内容が多くなった場合、上寄せにする */
+    text-align: left; /* 長文の場合、左寄せの方が見やすいことが多い */
 }
 
 #card-surface .chinese-text {
@@ -153,6 +155,8 @@ button:disabled {
 #card-surface p { /* 裏面の各情報 */
     margin: 8px 0;
     font-size: 18px; /* 少し小さく */
+    white-space: pre-wrap; /* 変更点: 改行と折り返しを有効に */
+    word-break: break-word; /* 長い単語でも折り返す */
 }
 
 
@@ -180,6 +184,8 @@ button:disabled {
     padding: 8px;
     text-align: left;
     word-break: break-all; /* 長い単語がセルをはみ出ないように */
+     white-space: pre-wrap; /* 変更点: 改行と折り返しを有効に */
+    vertical-align: top; /* 内容が複数行になった場合、上寄せにする */
 }
 
 #word-list-container th {
@@ -199,6 +205,7 @@ button:disabled {
 #word-list-container .chinese-text-list:hover {
     text-decoration: underline;
 }
+
 
 /* アイコンボタンスタイル */
 .icon-button {
@@ -259,6 +266,18 @@ button:disabled {
 .modal-content label {
     display: block;
     margin-bottom: 5px;
+}
+.modal-content textarea { /* 変更点: textarea用のスタイル */
+    width: 100%; /* inputと同様に幅いっぱい */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px; /* iOSでの自動ズーム抑制のため */
+    min-height: 60px; /* 最低限の高さを確保 */
+    resize: vertical; /* 縦方向のみリサイズ可 */
+    font-family: inherit; /* bodyのフォントを継承 */
+    line-height: 1.5; /* 行間を少し空ける */
 }
 .modal-content input[type="text"] {
     width: calc(100% - 22px); /* paddingを考慮 */

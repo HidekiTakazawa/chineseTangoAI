@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
      <!-- 変更点: viewportに maximum-scale=1, user-scalable=no を追加 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>中国語単語アプリ</title>
+     <title>中国語学習アプリ</title> <!-- タイトルも変更 -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>中国語単語学習</h1>
+            <h1>中国語学習</h1>
             <nav>
                 <button id="nav-to-flashcard">フラッシュカード</button>
                 <button id="nav-to-import">単語登録</button>
@@ -76,11 +76,11 @@
         </main>
     </div>
 
-    <!-- 単語編集モーダル (変更なし) -->
+    <!-- 単語編集モーダル (変更点あり) -->
     <div id="edit-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">×</span>
-            <h3>単語編集</h3>
+            <h3>データ編集</h3> <!-- タイトルも変更 -->
             <input type="hidden" id="edit-word-index">
             <div>
                 <label for="edit-category">区分:</label>
@@ -88,15 +88,18 @@
             </div>
             <div>
                 <label for="edit-chinese">中国語:</label>
-                <input type="text" id="edit-chinese">
+                <!-- 変更点: input -> textarea -->
+                <textarea id="edit-chinese" rows="3"></textarea>
             </div>
             <div>
                 <label for="edit-pinyin">ピンイン:</label>
-                <input type="text" id="edit-pinyin">
+                <!-- 変更点: input -> textarea -->
+                <textarea id="edit-pinyin" rows="2"></textarea>
             </div>
             <div>
                 <label for="edit-japanese">日本語訳:</label>
-                <input type="text" id="edit-japanese">
+                <!-- 変更点: input -> textarea -->
+                <textarea id="edit-japanese" rows="3"></textarea>
             </div>
             <button id="save-edit-button">保存</button>
         </div>
